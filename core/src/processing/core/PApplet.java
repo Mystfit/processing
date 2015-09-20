@@ -12770,7 +12770,6 @@ public class PApplet implements PConstants {
   /**
    * <h3>Advanced</h3>
    * Rotate about a vector in space. Same as the glRotatef() function.
-   * @nowebref
    * @param x
    * @param y
    * @param z
@@ -14860,6 +14859,12 @@ public class PApplet implements PConstants {
   public void set(int x, int y, int c) {
     if (recorder != null) recorder.set(x, y, c);
     g.set(x, y, c);
+  }
+
+
+  public void set(int x, int y, float r, float g, float b, float a) {
+    if (recorder != null) recorder.set(x, y, r, g, b, a);
+    g.set(x, y, r, g, b, a);
   }
 
 

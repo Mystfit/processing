@@ -94,6 +94,12 @@ public class PImage implements PConstants, Cloneable {
    */
   public int[] pixels;
 
+  /** Optional float pixels array for floating-point images. */
+  public float[] floatPixels;
+
+  /** Number of channels to store in floating point image. */
+  private int floatChannels = 4;
+
   /** 1 for most images, 2 for hi-dpi/retina */
   public int pixelDensity = 1;
 
@@ -264,6 +270,9 @@ public class PImage implements PConstants, Cloneable {
     pixelWidth = width * pixelDensity;
     pixelHeight = height * pixelDensity;
     this.pixels = new int[pixelWidth * pixelHeight];
+    if(format == ARGB_FLOAT){
+      this.floatPixels = new float[pixelWidth * pixelHeight * floatChannels];
+    }
   }
 
 
@@ -438,6 +447,9 @@ public class PImage implements PConstants, Cloneable {
   public void loadPixels() {  // ignore
     if (pixels == null || pixels.length != pixelWidth*pixelHeight) {
       pixels = new int[pixelWidth*pixelHeight];
+    }
+    if ((floatPixels == null || floatPixels.length != pixelWidth*pixelHeight*floatChannels) && format == ARGB_FLOAT) {
+      floatPixels = new float[pixelWidth*pixelHeight*floatChannels];
     }
     setLoaded();
   }
@@ -736,6 +748,10 @@ public class PImage implements PConstants, Cloneable {
 
       case ALPHA:
         return (pixels[y*pixelWidth + x] << 24) | 0xffffff;
+
+      //Can't return an int if we're using float textures
+      case ARGB_FLOAT:
+        return 0;
     }
     return 0;
   }
@@ -866,6 +882,16 @@ public class PImage implements PConstants, Cloneable {
   public void set(int x, int y, int c) {
     if ((x < 0) || (y < 0) || (x >= pixelWidth) || (y >= pixelHeight)) return;
     pixels[y*pixelWidth + x] = c;
+    updatePixels(x, y, 1, 1);  // slow...
+  }
+
+
+  public void set(int x, int y, float r, float g, float b, float a) {
+    if ((x < 0) || (y < 0) || (x >= pixelWidth) || (y >= pixelHeight)) return;
+    floatPixels[y*pixelWidth + x] = r;
+    floatPixels[y*pixelWidth + x + 1] = g;
+    floatPixels[y*pixelWidth + x + 2] = b;
+    floatPixels[y*pixelWidth + x + 3] = a;
     updatePixels(x, y, 1, 1);  // slow...
   }
 

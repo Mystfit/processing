@@ -700,6 +700,7 @@ public class PJOGL extends PGL {
     RGB565  = GL.GL_RGB565;
     RGB8    = GL.GL_RGB8;
     RGBA8   = GL.GL_RGBA8;
+    RGBA32F = GL.GL_RGBA32F;
     ALPHA8  = GL.GL_ALPHA8;
 
     READ_ONLY  = GL2ES3.GL_READ_ONLY;

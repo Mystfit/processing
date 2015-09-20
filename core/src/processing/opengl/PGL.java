@@ -2615,6 +2615,7 @@ public abstract class PGL {
   public static int RGB565;
   public static int RGB8;
   public static int RGBA8;
+  public static int RGBA32F;
   public static int ALPHA8;
 
   public static int READ_ONLY;
