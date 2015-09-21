@@ -399,11 +399,20 @@ public class PGraphicsOpenGL extends PGraphics {
   /** IntBuffer wrapping the pixels array. */
   protected IntBuffer pixelBuffer;
 
+  /** FloatBuffer wrapping the floatpixels array. (For floating-point textures) */
+  protected FloatBuffer floatPixelBuffer;
+
   /** Array to store pixels in OpenGL format. */
   protected int[] nativePixels;
 
+  /** Array to store pixels in OpenGL format. */
+  protected float[] nativeFloatPixels;
+
   /** IntBuffer wrapping the native pixels array. */
   protected IntBuffer nativePixelBuffer;
+
+  /** IntBuffer wrapping the native pixels array. */
+  protected FloatBuffer nativeFloatPixelBuffer;
 
   /** texture used to apply a filter on the screen image. */
   protected Texture filterTexture;
@@ -5497,6 +5506,12 @@ public class PGraphicsOpenGL extends PGraphics {
   public void set(int x, int y, int argb) {
     loadPixels();
     super.set(x, y, argb);
+  }
+
+  @Override
+  public void set(int x, int y, float red, float green, float blue, float alpha) {
+    loadPixels();
+    super.set(x, y, red, green, blue, alpha);
   }
 
 

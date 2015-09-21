@@ -757,6 +757,36 @@ public class PImage implements PConstants, Cloneable {
   }
 
 
+  public float getAlphaFloat(int x, int y) {
+    return getFloat(x, y, 0);
+  }
+
+  public float getRedFloat(int x, int y) {
+    return getFloat(x, y, 1);
+  }
+
+  public float getGreenFloat(int x, int y) {
+    return getFloat(x, y, 2);
+  }
+
+  public float getBlueFloat(int x, int y) {
+    return getFloat(x, y, 3);
+  }
+
+  /**
+   * Returns a specifc float pixel value at a coordinate
+   * @param x x-coordinate of the pixel
+   * @param y y-coordinate of the pixel
+   * @param channel ARGB channel to return
+   */
+  public float getFloat(int x, int y, int channel){
+    if ((x < 0) || (y < 0) || (x >= pixelWidth) || (y >= pixelHeight)) return 0;
+    if(format == ARGB_FLOAT){
+      return floatPixels[y * pixelWidth + x + channel];
+    }
+    return 0.0f;
+  }
+
   /**
    * @param w width of pixel rectangle to get
    * @param h height of pixel rectangle to get
@@ -886,7 +916,15 @@ public class PImage implements PConstants, Cloneable {
   }
 
 
-  public void set(int x, int y, float r, float g, float b, float a) {
+  /**
+   * Sets the value of a float pixel 
+   * 
+   * @param r Red value
+   * @param g Green value
+   * @param b Blue value
+   * @param a Alpha value
+   */
+  public void set(int x, int y, float red, float green, float blue, float alpha){
     if ((x < 0) || (y < 0) || (x >= pixelWidth) || (y >= pixelHeight)) return;
     floatPixels[y*pixelWidth + x] = r;
     floatPixels[y*pixelWidth + x + 1] = g;
