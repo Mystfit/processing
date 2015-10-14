@@ -548,6 +548,9 @@ public class PGraphicsOpenGL extends PGraphics {
 
     if (intBuffer == null) {
       intBuffer = PGL.allocateIntBuffer(2);
+    }
+
+    if(floatBuffer == null){
       floatBuffer = PGL.allocateFloatBuffer(2);
     }
 

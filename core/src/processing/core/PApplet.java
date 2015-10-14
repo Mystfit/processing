@@ -14802,6 +14802,37 @@ public class PApplet implements PConstants {
   }
 
 
+  public float getAlphaFloat(int x, int y) {
+    return g.getAlphaFloat(x, y);
+  }
+
+
+  public float getRedFloat(int x, int y) {
+    return g.getRedFloat(x, y);
+  }
+
+
+  public float getGreenFloat(int x, int y) {
+    return g.getGreenFloat(x, y);
+  }
+
+
+  public float getBlueFloat(int x, int y) {
+    return g.getBlueFloat(x, y);
+  }
+
+
+  /**
+   * Returns a specifc float pixel value at a coordinate
+   * @param x x-coordinate of the pixel
+   * @param y y-coordinate of the pixel
+   * @param channel ARGB channel to return
+   */
+  public float getFloat(int x, int y, int channel){
+    return g.getFloat(x, y, channel);
+  }
+
+
   /**
    * @param w width of pixel rectangle to get
    * @param h height of pixel rectangle to get
@@ -14862,9 +14893,17 @@ public class PApplet implements PConstants {
   }
 
 
-  public void set(int x, int y, float r, float g, float b, float a) {
-    if (recorder != null) recorder.set(x, y, r, g, b, a);
-    g.set(x, y, r, g, b, a);
+  /**
+   * Sets the value of a float pixel 
+   * 
+   * @param r Red value
+   * @param g Green value
+   * @param b Blue value
+   * @param a Alpha value
+   */
+  public void set(int x, int y, float red, float green, float blue, float alpha){
+    if (recorder != null) recorder.set(x, y, red, green, blue, alpha);
+    g.set(x, y, red, green, blue, alpha);
   }
 
 

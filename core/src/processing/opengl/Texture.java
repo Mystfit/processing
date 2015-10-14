@@ -32,6 +32,7 @@ import processing.opengl.PGraphicsOpenGL.GLResourceTexture;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.FloatBuffer;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -106,10 +107,14 @@ public class Texture implements PConstants {
   protected boolean invertedY;
 
   protected int[] rgbaPixels = null;
+  protected float[] rgbaFloatPixels = null;
   protected IntBuffer pixelBuffer = null;
+  protected FloatBuffer floatPixelBuffer = null;
 
   protected int[] edgePixels = null;
+  protected float[] floatEdgePixels = null;
   protected IntBuffer edgeBuffer = null;
+  protected FloatBuffer floatEdgeBuffer = null;
 
   protected FrameBuffer tempFbo = null;
   protected int pixBufUpdateCount = 0;
@@ -313,6 +318,15 @@ public class Texture implements PConstants {
 
   public void set(int[] pixels, int x, int y, int w, int h) {
     set(pixels, x, y, w, h, ARGB);
+  }
+
+  public void set(float[] pixels) {
+    set(pixels, 0, 0, width, height, ARGB_FLOAT);
+  }
+
+
+  public void set(float[] pixels, int x, int y, int w, int h) {
+    set(pixels, x, y, w, h, ARGB_FLOAT);
   }
 
 
@@ -1354,6 +1368,8 @@ public class Texture implements PConstants {
       res.format = ARGB;
     } else  if (glFormat == PGL.ALPHA) {
       res.format = ALPHA;
+    } else  if (glFormat == PGL.RGBA32F) {
+      res.format = ARGB_FLOAT;
     }
 
     if (glMagFilter == PGL.NEAREST && glMinFilter == PGL.NEAREST) {
@@ -1414,6 +1430,8 @@ public class Texture implements PConstants {
       glFormat = PGL.RGBA;
     } else  if (params.format == ALPHA) {
       glFormat = PGL.ALPHA;
+    }  else  if (params.format == ARGB_FLOAT) {
+      glFormat = PGL.RGBA32F;
     } else {
       throw new RuntimeException("Unknown texture format");
     }
@@ -1642,10 +1660,20 @@ public class Texture implements PConstants {
     Object natBuf;
     // Buffer viewed as int.
     IntBuffer rgbBuf;
+    FloatBuffer rgbFloatBuf;
 
     BufferData(Object nat, IntBuffer rgb, int w, int h) {
-      natBuf = nat;
       rgbBuf = rgb;
+      init(nat, w, h);
+    }
+
+    BufferData(Object nat, FloatBuffer rgb, int w, int h) {
+      rgbFloatBuf = rgb;
+      init(nat, w, h);
+    }
+
+    void init(Object nat, int w, int h){
+      natBuf = nat;
       this.w = w;
       this.h = h;
     }
@@ -1656,6 +1684,7 @@ public class Texture implements PConstants {
         disposeBufferMethod.invoke(bufferSource, new Object[] { natBuf });
         natBuf = null;
         rgbBuf = null;
+        rgbFloatBuf = null;
       } catch (Exception e) {
         e.printStackTrace();
       }

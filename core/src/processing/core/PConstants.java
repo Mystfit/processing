@@ -228,7 +228,7 @@ public interface PConstants {
   static final int ARGB  = 2;  // image
   static final int HSB   = 3;  // color
   static final int ALPHA = 4;  // image
-  static final int ARGB_FLOAT = 5;
+  static final int ARGB_FLOAT = 5; //floating point image
 //  static final int CMYK  = 5;  // image & color (someday)
 
 
@@ -520,9 +520,6 @@ public interface PConstants {
 
   static final int DISABLE_KEY_REPEAT         =  11;
   static final int ENABLE_KEY_REPEAT          = -11;
-
-  static final int DISABLE_RGBA32F_TEXTURES   =  12;
-  static final int ENABLE_RGBA32F_TEXTURES    = -12;
 
   static final int HINT_COUNT                 =  13;
 }
